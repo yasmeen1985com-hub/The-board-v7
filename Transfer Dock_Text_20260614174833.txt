@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Board V7.1 — Probabilistic Verification</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>THE BOARD V7.1</h1>
+            <p class="subtitle">Zero-Cost • Privacy-First • Probabilistic Security</p>
+            <div class="badge">IMMUTABLE • MIT LICENSED • SHIPPED 14 JUNE 2026</div>
+        </header>
+        <main id="app">
+            <div id="calibration-screen" class="screen active">
+                <h2>30-Second Calibration</h2>
+                <p>This replaces hostile testing with collaborative baseline capture.</p>
+                <div class="instruction">Type the following sentence naturally:</div>
+                <div class="prompt-text" id="prompt">"Architecture is discipline under pressure."</div>
+                <textarea id="input" placeholder="Start typing here..." autocomplete="off"></textarea>
+                <div class="timer">Time: <span id="time">0.0</span>s / 30.0s</div>
+                <button id="start-btn">Begin Calibration</button>
+            </div>
+            <div id="result-screen" class="screen">
+                <h2>Calibration Complete</h2>
+                <div class="trust-score">
+                    <div class="label">Trust Score</div>
+                    <div class="score" id="score">--</div>
+                    <div class="sublabel" id="verdict">Analyzing...</div>
+                </div>
+                <div class="metrics">
+                    <div><strong>Mahalanobis Distance:</strong> <span id="m-distance">--</span></div>
+                    <div><strong>Bayesian Confidence:</strong> <span id="bayesian">--</span>%</div>
+                    <div><strong>Data Residency:</strong> localStorage only</div>
+                    <div><strong>Operational Cost:</strong> $0.00</div>
+                </div>
+                <button id="reset-btn">Run New Calibration</button>
+            </div>
+        </main>
+        <footer>
+            <p>Architect: Mohammad Zaheer Pasha | <a href="https://github.com/zaheer-pasha/the-board-v7" target="_blank">GitHub</a></p>
+            <p class="legacy">Case File: THE BOARD — CLOSED | `exit 0`</p>
+        </footer>
+    </div>
+    <script src="board.js"></script>
+</body>
+</html>

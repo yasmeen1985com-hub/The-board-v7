@@ -1,0 +1,20 @@
+# The Board V7.1
+**Status:** ARCHIVED / IMMUTABLE  
+**Shipped:** 14 June 2026, 17:39 IST  
+**License:** MIT  
+**Operational Cost:** $0.00  
+
+## Architectural Pillars
+
+1. **Probabilistic Security Engine**: Mahalanobis distance + Bayesian inference. Replaces binary pass/fail with `trust_score`.
+2. **Privacy-by-Design**: 100% localStorage. Zero data transmission. GDPR-aligned by architecture.
+3. **Zero-Cost Infrastructure**: GitHub Pages. Enterprise auditability without financial runway.
+4. **Empathy-Driven UX**: 30-second Calibration. Candidate dignity = data fidelity.
+
+## Case File: CLOSED
+**Founder:** Mohammad Zaheer Pasha  
+**Cycle:** 96 Hours V0 → V7.1  
+**Commit:** `7f1nal`  
+
+*System integrity validated. The architectural record is immutable.*  
+`exit 0`
