@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Board V7.1 — Probabilistic Verification</title>
+    <style>
+        :root{--bg:#0a0a0a;--fg:#e5e5e5;--accent:#00ff88;--border:#2a2a2a}*{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--fg);line-height:1.6}.container{max-width:800px;margin:0 auto;padding:2rem 1rem}header{text-align:center;margin-bottom:3rem}h1{font-size:2.5rem;letter-spacing:-1px}.subtitle{color:#888;margin:.5rem 0}.badge{display:inline-block;background:var(--border);padding:.25rem .75rem;border-radius:4px;font-size:.75rem;margin-top:1rem;color:var(--accent)}.screen{display:none}.screen.active{display:block}.prompt-text{background:var(--border);padding:1rem;border-radius:4px;margin:1rem 0;font-family:monospace;border-left:3px solid var(--accent)}textarea{width:100%;height:120px;background:#111;border:1px solid var(--border);color:var(--fg);padding:1rem;border-radius:4px;font-size:1rem;resize:none;margin:1rem 0}button{background:var(--accent);color:var(--bg);border:none;padding:.75rem 2rem;border-radius:4px;font-weight:600;cursor:pointer;font-size:1rem}button:disabled{opacity:.5;cursor:not-allowed}.timer{margin:1rem 0;color:#888}.trust-score{text-align:center;background:var(--border);padding:2rem;border-radius:8px;margin:2rem 0}.score{font-size:4rem;font-weight:700;color:var(--accent)}.metrics{display:grid;gap:.5rem;margin:2rem 0}footer{text-align:center;margin-top:4rem;padding-top:2rem;border-top:1px solid var(--border);color:#666;font-size:.875rem}.legacy{margin-top:.5rem;font-family:monospace}a{color:var(--accent);text-decoration:none}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>THE BOARD V7.1</h1>
+            <p class="subtitle">Zero-Cost • Privacy-First • Probabilistic Security</p>
+            <div class="badge">IMMUTABLE • MIT LICENSED • SHIPPED 14 JUNE 2026</div>
+        </header>
+        <main id="app">
+            <div id="calibration-screen" class="screen active">
+                <h2>30-Second Calibration</h2>
+                <p>This replaces hostile testing with collaborative baseline capture.</p>
+                <div class="instruction">Type the following sentence naturally:</div>
+                <div class="prompt-text" id="prompt">"Architecture is discipline under pressure."</div>
+                <textarea id="input" placeholder="Start typing here..." autocomplete="off"></textarea>
+                <div class="timer">Time: <span id="time">0.0</span>s / 30.0s</div>
+                <button id="start-btn">Begin Calibration</button>
+            </div>
+            <div id="result-screen" class="screen">
+                <h2>Calibration Complete</h2>
+                <div class="trust-score">
+                    <div class="label">Trust Score</div>
+                    <div class="score" id="score">--</div>
+                    <div class="sublabel" id="verdict">Analyzing...</div>
+                </div>
+                <div class="metrics">
+                    <div><strong>Mahalanobis Distance:</strong> <span id="m-distance">--</span></div>
+                    <div><strong>Bayesian Confidence:</strong> <span id="bayesian">--</span>%</div>
+                    <div><strong>Data Residency:</strong> localStorage only</div>
+                    <div><strong>Operational Cost:</strong> $0.00</div>
+                </div>
+                <button id="reset-btn">Run New Calibration</button>
+            </div>
+        </main>
+        <footer>
+            <p>Architect: Mohammad Zaheer Pasha | <a href="https://github.com/yasmeen1985com-hub/The-board-v7" target="_blank">GitHub</a></p>
+            <p class="legacy">Case File: THE BOARD — CLOSED | `exit 0`</p>
+        </footer>
+    </div>
+    <script>
+        class TheBoard{constructor(){this.keystrokes=[];this.startTime=null;this.baseline=this.loadBaseline();this.init()}init(){document.getElementById('start-btn').onclick=()=>this.startCalibration();document.getElementById('reset-btn').onclick=()=>this.reset();document.getElementById('input').onkeydown=(e)=>this.recordKeystroke(e)}startCalibration(){this.keystrokes=[];this.startTime=Date.now();document.getElementById('input').value='';document.getElementById('input').focus();this.timer=setInterval(()=>{const elapsed=((Date.now()-this.startTime)/1000).toFixed(1);document.getElementById('time').textContent=elapsed;if(elapsed>=30)this.finishCalibration()},100);document.getElementById('start-btn').disabled=true}recordKeystroke(e){if(!this.startTime)return;this.keystrokes.push({key:e.key,time:Date.now()-this.startTime,flight:this.keystrokes.length?Date.now()-this.startTime-this.keystrokes[this.keystrokes.length-1].time:0})}finishCalibration(){clearInterval(this.timer);const features=this.extractFeatures();const trustScore=this.calculateTrustScore(features);this.saveBaseline(features);this.showResults(trustScore)}extractFeatures(){const intervals=this.keystrokes.map(k=>k.flight).filter(f=>f>0);const mean=intervals.reduce((a,b)=>a+b,0)/intervals.length||0;const variance=intervals.reduce((a,b)=>a+Math.pow(b-mean,2),0)/intervals.length||0;return{meanInterval:mean,variance:variance,wpm:(this.keystrokes.length/5)/0.5,keystrokeCount:this.keystrokes.length}}calculateTrustScore(features){if(!this.baseline)return{score:100,mDist:0,confidence:50,verdict:"Baseline Created"};const diff=features.meanInterval-this.baseline.meanInterval;const mDist=Math.abs(diff)/Math.sqrt(this.baseline.variance||1);const likelihood=Math.exp(-0.5*mDist*mDist);const confidence=(likelihood*0.5)/(likelihood*0.5+(1-likelihood)*0.5)*100;const score=Math.max(0,Math.min(100,100-mDist*15));let verdict="High Integrity";if(score<70)verdict="Review Recommended";if(score<40)verdict="Anomaly Detected";return{score:score.toFixed(1),mDist:mDist.toFixed(3),confidence:confidence.toFixed(1),verdict}}saveBaseline(features){localStorage.setItem('board_v71_baseline',JSON.stringify(features));localStorage.setItem('board_v71_timestamp','2026-06-14T17:39:00+05:30')}loadBaseline(){const data=localStorage.getItem('board_v71_baseline');return data?JSON.parse(data):null}showResults(result){document.getElementById('calibration-screen').classList.remove('active');document.getElementById('result-screen').classList.add('active');document.getElementById('score').textContent=result.score;document.getElementById('m-distance').textContent=result.mDist;document.getElementById('bayesian').textContent=result.confidence;document.getElementById('verdict').textContent=result.verdict}reset(){document.getElementById('result-screen').classList.remove('active');document.getElementById('calibration-screen').classList.add('active');document.getElementById('start-btn').disabled=false;document.getElementById('time').textContent='0.0';document.getElementById('input').value=''}}new TheBoard();
+    </script>
+</body>
+</html>
